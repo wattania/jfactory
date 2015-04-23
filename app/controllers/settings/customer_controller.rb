@@ -1,4 +1,8 @@
 class Settings::CustomerController < ResourceHelperController
+  def model
+    RefCustomer
+  end
+
   def projects
     rf = RefCustomer.arel_table
     {
@@ -10,7 +14,7 @@ class Settings::CustomerController < ResourceHelperController
   end
 
   def index_list result
-    rf = RefCustomer.arel_table
+    rf = model.arel_table
 
     stmt = rf.project(project_stmt projects).where(rf[:deleted_at].eq nil).order(rf[:cust_name])
 
@@ -25,22 +29,25 @@ class Settings::CustomerController < ResourceHelperController
   end
 
   def update_edit result
-    n = RefCustomer.find params[:id]
+    n = model.find params[:id]
     n.fn_update_record_data params[:data]
     n.updated_by = current_user.uuid
     save_record result, n
+    result[:record_id] = n.id
   end
 
   def show_form_edit result
-    result[:rows] = RefCustomer.find params[:id]
+    result[:rows] = model.find params[:id]
   end
 
   def create_new result
-    n = RefCustomer.new 
+    n = model.new 
     n.fn_update_record_data params[:data]
     n.created_by = current_user.uuid
     n.updated_by = n.created_by
 
     save_record result, n
+
+    result[:record_id] = n.id
   end
 end

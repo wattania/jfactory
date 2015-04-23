@@ -21,18 +21,31 @@ if User.select("1").where(user_name: 'admin').first.blank?
   admin.save!
 end
 ########################################################################################################################
+def init_ref model, field, words
+  words.each{|word|
+    cond = {}
+    cond[field] = word
+    
+    if model.select("1").where(cond).where(deleted_at: nil).first.blank?
+      n = model.new 
+      n[field] = word
+      n.created_by = 'rake db:seed'
+      n.updated_by = 'rake db:seed'
+      n.save!
+    end
+  }
+end
+########################################################################################################################
 # customer
-[
+init_ref RefCustomer, :cust_name, [
   'Katolec (Vietnam)', 'KSN', 'KTN', 'NBS', 'NC', 
   'NIC', 'NIDEC', 'NLC', 'NMB-C', 'NMB-Thai', 'NOBLE (Eletronic)', 
   'Noble Trading Bangkok', 'RHYTHM', 'SIIX (Bangkok)'
-].each{|word|
-
-  if RefCustomer.select("1").where(cust_name: word).where(deleted_at: nil).first.blank?
-    n = RefCustomer.new 
-    n.cust_name = word
-    n.created_by = 'rake db:seed'
-    n.updated_by = 'rake db:seed'
-    n.save!
-  end
-}
+] 
+########################################################################################################################
+# customer
+init_ref RefFreightTerm, :freight_term, [
+  'C.I.F.HONGKONG', 'C.I.F.YANGON', 'C.I.F.DALIAN', 'C.I.F.SAVANNAKHET', 'C.I.F.TOKYO', 
+  'F.O.B.BANGKOK', 'F.O.B.AYUTTHAYA', 'D.A.T.WUXI', 'C.I.F.HA-NOI', 'C.I.F.AYUTTHAYA', 'C.I.F.SHANGHAI', 
+  'C.I.F.SENDAI', 'C.I.P.TOKYO', 'F.C.A.BANGKOK'
+]

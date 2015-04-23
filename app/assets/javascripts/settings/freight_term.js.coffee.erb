@@ -1,8 +1,8 @@
 //= require list_view_panel_base2
 
-Ext.define 'Setting.customer',
+Ext.define 'Setting.freight_term',
   extend: 'MainView'
-  get_title: -> 'Settings > Customer Name'
+  get_title: -> 'Settings > Freight Term'
   get_url: -> '<%= Pathname.new(__FILE__).to_s.split("javascripts")[1].to_s.split(".")[0] %>'
   get_view: (initview, fn)->
     me = @
@@ -20,11 +20,11 @@ Ext.define 'Setting.customer',
           value: init.lock_version
         ,
           type: 'text'
-          captions: ['Customer Name']
+          captions: ['Freight Term']
           pos: [1, 1]
           is_require: true
-          name: 'cust_name' 
-          value: init.cust_name
+          name: 'freight_term' 
+          value: init.freight_term
         ,
           type: 'text'
           captions: ['Remark']
@@ -38,9 +38,9 @@ Ext.define 'Setting.customer',
         col: 6
         items: [
           type: 'text'
-          name: 'cust_name' 
+          name: 'freight_term' 
           pos: [1, 1]
-          captions: ['Customer Name']
+          captions: ['Freight Term']
         ,
           type: 'text'
           captions: ['Remark']
@@ -52,8 +52,8 @@ Ext.define 'Setting.customer',
         row_numberer: {width: 40}
         columns: [
           type: 'text'
-          captions: ['Customer Name']
-          name: 'cust_name'
+          captions: ['Freight Term']
+          name: 'freight_term'
           width: 200
 
         ,

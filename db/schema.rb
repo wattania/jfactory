@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150423054015) do
+ActiveRecord::Schema.define(version: 20150423143804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,8 +28,23 @@ ActiveRecord::Schema.define(version: 20150423054015) do
     t.datetime "updated_at"
   end
 
-  add_index "ref_customers", ["cust_name"], name: "index_ref_customers_on_cust_name", unique: true, using: :btree
+  add_index "ref_customers", ["cust_name"], name: "index_ref_customers_on_cust_name", using: :btree
   add_index "ref_customers", ["uuid"], name: "index_ref_customers_on_uuid", unique: true, using: :btree
+
+  create_table "ref_freight_terms", force: true do |t|
+    t.string   "freight_term",                        null: false
+    t.text     "remark"
+    t.string   "uuid",         limit: 36,             null: false
+    t.integer  "lock_version",            default: 0, null: false
+    t.datetime "deleted_at"
+    t.string   "created_by",                          null: false
+    t.string   "updated_by",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ref_freight_terms", ["freight_term"], name: "index_ref_freight_terms_on_freight_term", using: :btree
+  add_index "ref_freight_terms", ["uuid"], name: "index_ref_freight_terms_on_uuid", unique: true, using: :btree
 
   create_table "sys_config_by_dates", force: true do |t|
     t.date     "effective_date",                                      null: false
