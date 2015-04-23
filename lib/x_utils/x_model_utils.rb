@@ -70,7 +70,7 @@ class XModelUtils
     else
       Arel::Nodes::NamedFunction.new('trim', [ 
         Arel::Nodes::NamedFunction.new('to_char', [ 
-          Arel::Nodes::NamedFunction.new('COALESCE', [a_field, 0]), Arel::Nodes::Quoted.new(precision)
+          Arel::Nodes::NamedFunction.new('COALESCE', [a_field, 0]),  precision
         ])
       ])  
     end
@@ -84,7 +84,7 @@ class XModelUtils
       empty.push suffix_desc 
       desc_lst.push suffix_desc
     end
-    desc = Arel::Nodes::NamedFunction.new("NULLIF", [ Arel::Nodes::NamedFunction.new("CONCAT", desc_lst),  Arel::Nodes::Quoted.new( empty.join('') )])
+    desc = Arel::Nodes::NamedFunction.new("NULLIF", [ Arel::Nodes::NamedFunction.new("CONCAT", desc_lst),   empty.join('') ])
  
     Arel::Nodes::NamedFunction.new("CONCAT", [
       name_field,
@@ -93,11 +93,11 @@ class XModelUtils
   end
 
   def self.timestamp field 
-    Arel::Nodes::NamedFunction.new('to_char', [field, Arel::Nodes::Quoted.new('DD/MM/YYYY HH24:MI:SS')]) 
+    Arel::Nodes::NamedFunction.new('to_char', [field, 'DD/MM/YYYY HH24:MI:SS']) 
   end
 
   def self.date field 
-    Arel::Nodes::NamedFunction.new('to_char', [field, Arel::Nodes::Quoted.new('DD/MM/YYYY')]) 
+    Arel::Nodes::NamedFunction.new('to_char', [field,  'DD/MM/YYYY']) 
   end
 
   def self.join_rf stmt, rf, field, key_type_sym

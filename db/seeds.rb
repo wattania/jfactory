@@ -21,3 +21,18 @@ if User.select("1").where(user_name: 'admin').first.blank?
   admin.save!
 end
 ########################################################################################################################
+# customer
+[
+  'Katolec (Vietnam)', 'KSN', 'KTN', 'NBS', 'NC', 
+  'NIC', 'NIDEC', 'NLC', 'NMB-C', 'NMB-Thai', 'NOBLE (Eletronic)', 
+  'Noble Trading Bangkok', 'RHYTHM', 'SIIX (Bangkok)'
+].each{|word|
+
+  if RefCustomer.select("1").where(cust_name: word).where(deleted_at: nil).first.blank?
+    n = RefCustomer.new 
+    n.cust_name = word
+    n.created_by = 'rake db:seed'
+    n.updated_by = 'rake db:seed'
+    n.save!
+  end
+}

@@ -11,10 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150418100511) do
+ActiveRecord::Schema.define(version: 20150423054015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ref_customers", force: true do |t|
+    t.string   "cust_name",                           null: false
+    t.text     "remark"
+    t.string   "uuid",         limit: 36,             null: false
+    t.integer  "lock_version",            default: 0, null: false
+    t.datetime "deleted_at"
+    t.string   "created_by",                          null: false
+    t.string   "updated_by",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ref_customers", ["cust_name"], name: "index_ref_customers_on_cust_name", unique: true, using: :btree
+  add_index "ref_customers", ["uuid"], name: "index_ref_customers_on_uuid", unique: true, using: :btree
 
   create_table "sys_config_by_dates", force: true do |t|
     t.date     "effective_date",                                      null: false

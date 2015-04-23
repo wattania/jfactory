@@ -173,7 +173,31 @@ Ext.define 'MainPage',
               me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
           menu: [
             text: 'User'
-            program: 'user'
+            program: 'user' 
+            handler: (btn)->
+              btn.setDisabled true
+              me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
+          ,
+            text: 'ชื่อลูกค้า'
+            program: 'customer' 
+            handler: (btn)->
+              btn.setDisabled true
+              me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
+          ,
+            text: 'Freight Term'
+            program: 'freight_term'
+            handler: (btn)->
+              btn.setDisabled true
+              me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
+          ,
+            text: 'Models'
+            program: 'models'
+            handler: (btn)->
+              btn.setDisabled true
+              me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
+          ,
+            text: 'Unit Price'
+            program: 'unit_price'
             handler: (btn)->
               btn.setDisabled true
               me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false

@@ -4,7 +4,7 @@ Jfactory::Application.routes.draw do
   post '/initialize' => 'home#app_init'
 
   namespace :settings do
-    resources :user
+    resources :user, :customer
   end
 
   namespace :programs do 
