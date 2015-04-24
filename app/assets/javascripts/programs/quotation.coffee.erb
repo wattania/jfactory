@@ -5,71 +5,54 @@ Ext.define 'QuotationView',
   extend: 'Ext.panel.Panel'
   border: false
   layout: 'card'#type: 'vbox', align: 'stretch'
-  filter_data: {}
-  listeners:
-    render: (me)->
-      btn_serch = me.down 'button[name=search]'
-      btn_create = me.down 'button[name=create]'
+  add_filter: (name, type, caption)->
+    me = @
+    cmp = Ext.create 'Ext.panel.Panel',
+      xtype: 'panel'
+      layout: type: 'hbox', align: 'stretch'
+      height: 70
+      border: false
+      items: [
+        layout: type: 'vbox'#, align: 'stretch'
+        border: false
+        bodyPadding: '5 0 0 2'
+        items: [
+          xtype: 'button'
+          text: text_fa_icon 'times', ''
+          cls: 'filter_remove_btn'
+          cmp: cmp
+          handler: (btn)->
+            me.filter_form.remove cmp
+        ,
+          flex: 1
+          border: false 
+        ]
+      ,
+        border: false
+        layout: type: 'vbox' 
+        margin: '5 0 0 5'
+        items: [
+          xtype: 'x_date_range'
+          width: 200
+          name: name
+          captions: caption
+        ]
+      ]
 
-      btn_create.on 'click', (btn)->
-        me.setLoading true
-        Ext.defer ()->
-          form = Ext.create 'QuotationCreate',
-            flex: 1
-
-          panel = Ext.create 'Ext.panel.Panel',
-            listeners:
-              render: ()->
-                btn_back = panel.down 'button[name=back]'
-
-                btn_back.on 'click', ()->
-                  me.setActiveItem 0
-                  me.remove me.items.getAt 1
-
-            dockedItems: [
-              xtype: 'toolbar'
-              dock: 'top'
-              items: [
-                xtype: 'button'
-                text: text_fa_icon 'save', 'Save'
-              ,
-                xtype: 'button'
-                text: text_fa_icon 'trash', 'Delete'
-                hidden: true
-              ,
-                xtype: 'button'
-                text: text_fa_icon 'arrow-left', 'Back'
-                name: 'back'
-              ]
-            ]
-            layout: type: 'vbox', align: 'stretch'
-            autoScroll: true
-            items: [
-              form
-            ]
-          me.add panel
-          me.getLayout().setActiveItem panel
-          me.setLoading false
-        , 100
-
+    @filter_form.add cmp
+      
 
   initComponent: ->
-
-    @filter = Ext.create 'QuotationSearch'
+    me = @
 
     store = Ext.create 'Ext.data.Store',
       fields: ['a', 'b']
 
-
-    grid = Ext.create 'Ext.grid.Panel',
+    @grid = Ext.create 'Ext.grid.Panel',
+      region: 'center'
       flex: 1
       store: store 
       dockedItems: [
-        xtype: 'pagingtoolbar'
-        store: store
-        dock: 'bottom'
-        displayInfo: true
-      ,
         xtype: 'toolbar'
         dock: 'top'
         items: [
@@ -78,9 +61,14 @@ Ext.define 'QuotationView',
           name: 'create'
         ,
           xtype: 'button'
-          text: text_fa_icon 'edit', 'Edit'
+          text: text_fa_icon 'edit', 'View'
           disabled: true
         ]
+      ,
+        xtype: 'pagingtoolbar'
+        store: store
+        dock: 'bottom'
+        displayInfo: true
       ]
       columns: [
         xtype: 'rownumberer'
@@ -124,33 +112,55 @@ Ext.define 'QuotationView',
         text: 'Calc.File'
       ]
 
-    @items = [ 
+    @filter_form = Ext.create 'Ext.form.Panel',
       border: false
+      autoScroll: true 
       layout: type: 'vbox', align: 'stretch'
+
+    @items = [ 
+      xtype: 'panel'
+      border: false
+      layout: 'border'
       items: [
+        @grid
+      ,
         xtype: 'panel'
-        border: false
+        region: 'west'
+        title: 'Filter'
         dockedItems: [
           xtype: 'toolbar'
-          docked: 'top'
+          dock: 'top'
           items: [
             xtype: 'button'
+            text: text_fa_icon 'plus', 'Add'
+            menu: [
+              text: 'Quotation No.'
+              handler: ()->
+                me.add_filter "xx", "", ["Quotation No."]
+            ]
+          ,
+            xtype: 'button'
+            text: text_fa_icon 'eraser', 'Clear', 'fa-flip'
+            handler: ()->
+              me.filter_form.removeAll()
+          ,
+            '->'
+          ,
+            xtype: 'button'
             text: text_fa_icon 'search', 'Search'
-          ,
-            xtype: 'button'
-            text: text_fa_icon 'eraser', 'Clear', 'fa-flip-horizontal'
-          ,
-            xtype: 'button'
-            text: text_fa_icon 'file-excel-o', 'Export'
           ]
         ]
-        items: @filter 
-      ,
-        grid 
+        width: 400
+        collapsed: true
+        collapsible: true
+        layout: 'fit'
+        items: [
+          @filter_form
+        ]
       ]
     ]
-
     @callParent arguments
+
 
 Ext.define 'Program.quotation',
   extend: 'MainView'
