@@ -191,7 +191,7 @@ Ext.define 'MainPage',
               me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
           ,
             text: 'Models'
-            program: 'models'
+            program: 'model'
             handler: (btn)->
               btn.setDisabled true
               me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
