@@ -14,4 +14,12 @@ class RefCustomer < ActiveRecord::Base
       error[:cust_name] << "Customer Name Duplicate!"
     end
   end
+
+  def self.dropdown
+    ret = []
+    where(deleted_at: nil).order(:cust_name).each{|row|
+      ret.push({cust_name: row.cust_name, uuid: row.uuid})
+    }
+    ret
+  end
 end

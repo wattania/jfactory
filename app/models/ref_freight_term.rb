@@ -14,4 +14,12 @@ class RefFreightTerm < ActiveRecord::Base
       error[:freight_term] << "Freight Term Duplicate!"
     end
   end
+
+  def self.dropdown
+    ret = []
+    where(deleted_at: nil).order(:freight_term).each{|row|
+      ret.push({freight_term: row.freight_term, uuid: row.uuid})
+    }
+    ret
+  end
 end

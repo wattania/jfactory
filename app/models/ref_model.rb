@@ -14,4 +14,12 @@ class RefModel < ActiveRecord::Base
       error[:model_name] << "Model Duplicate!"
     end
   end
+
+  def self.dropdown
+    ret = []
+    where(deleted_at: nil).order(:model_name).each{|row|
+      ret.push({model_name: row.model_name, uuid: row.uuid})
+    }
+    ret
+  end
 end

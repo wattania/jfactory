@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424095816) do
+ActiveRecord::Schema.define(version: 20150424143130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,6 +121,81 @@ ActiveRecord::Schema.define(version: 20150424095816) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "tb_quotation_approve_files", force: true do |t|
+    t.string   "tb_quotation_uuid", null: false
+    t.string   "file_hash",         null: false
+    t.string   "file_name",         null: false
+    t.string   "created_by",        null: false
+    t.string   "updated_by",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tb_quotation_approve_files", ["created_by"], name: "index_tb_quotation_approve_files_on_created_by", using: :btree
+  add_index "tb_quotation_approve_files", ["file_hash"], name: "index_tb_quotation_approve_files_on_file_hash", unique: true, using: :btree
+  add_index "tb_quotation_approve_files", ["file_name"], name: "index_tb_quotation_approve_files_on_file_name", using: :btree
+  add_index "tb_quotation_approve_files", ["updated_by"], name: "index_tb_quotation_approve_files_on_updated_by", using: :btree
+
+  create_table "tb_quotation_calculation_files", force: true do |t|
+    t.string   "tb_quotation_uuid", null: false
+    t.string   "file_hash",         null: false
+    t.string   "file_name",         null: false
+    t.string   "created_by",        null: false
+    t.string   "updated_by",        null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tb_quotation_calculation_files", ["created_by"], name: "index_tb_quotation_calculation_files_on_created_by", using: :btree
+  add_index "tb_quotation_calculation_files", ["file_hash"], name: "index_tb_quotation_calculation_files_on_file_hash", unique: true, using: :btree
+  add_index "tb_quotation_calculation_files", ["file_name"], name: "index_tb_quotation_calculation_files_on_file_name", using: :btree
+  add_index "tb_quotation_calculation_files", ["updated_by"], name: "index_tb_quotation_calculation_files_on_updated_by", using: :btree
+
+  create_table "tb_quotation_items", force: true do |t|
+    t.string   "quotation_uuid",                                          null: false
+    t.string   "item_code"
+    t.string   "ref_model_uuid",                                          null: false
+    t.string   "sub_code"
+    t.string   "customer_code"
+    t.string   "part_name"
+    t.decimal  "part_price",                     precision: 20, scale: 2
+    t.decimal  "package_price",                  precision: 20, scale: 2
+    t.string   "ref_unit_price_ref",                                      null: false
+    t.string   "po_reference",       limit: 400
+    t.string   "remark",             limit: 400
+    t.string   "created_by",                                              null: false
+    t.string   "updated_by",                                              null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tb_quotation_items", ["created_by"], name: "index_tb_quotation_items_on_created_by", using: :btree
+  add_index "tb_quotation_items", ["quotation_uuid"], name: "index_tb_quotation_items_on_quotation_uuid", unique: true, using: :btree
+  add_index "tb_quotation_items", ["ref_model_uuid"], name: "index_tb_quotation_items_on_ref_model_uuid", using: :btree
+  add_index "tb_quotation_items", ["ref_unit_price_ref"], name: "index_tb_quotation_items_on_ref_unit_price_ref", using: :btree
+  add_index "tb_quotation_items", ["updated_by"], name: "index_tb_quotation_items_on_updated_by", using: :btree
+
+  create_table "tb_quotations", force: true do |t|
+    t.string   "uuid",                  limit: 36,                                      null: false
+    t.string   "quotation_no"
+    t.string   "ref_customer_uuid",     limit: 36,                                      null: false
+    t.date     "issue_date"
+    t.string   "ref_freight_term_uuid"
+    t.decimal  "exchange_rate",                    precision: 20, scale: 4
+    t.integer  "lock_version",                                              default: 0, null: false
+    t.string   "created_by",                                                            null: false
+    t.string   "updated_by",                                                            null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tb_quotations", ["created_by"], name: "index_tb_quotations_on_created_by", using: :btree
+  add_index "tb_quotations", ["quotation_no"], name: "index_tb_quotations_on_quotation_no", using: :btree
+  add_index "tb_quotations", ["ref_customer_uuid"], name: "index_tb_quotations_on_ref_customer_uuid", using: :btree
+  add_index "tb_quotations", ["ref_freight_term_uuid"], name: "index_tb_quotations_on_ref_freight_term_uuid", using: :btree
+  add_index "tb_quotations", ["updated_by"], name: "index_tb_quotations_on_updated_by", using: :btree
+  add_index "tb_quotations", ["uuid"], name: "index_tb_quotations_on_uuid", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "email",                             default: "",    null: false

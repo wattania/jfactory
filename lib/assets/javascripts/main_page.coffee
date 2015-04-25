@@ -81,6 +81,15 @@ Ext.define 'MainPage',
           name: 'main_page'
           title: title
           layout: 'fit'
+          set_title: (title)->
+            if Ext.isEmpty @__title
+              @__title = @getTitle()  
+
+            @setTitle title 
+
+          restore_title: ()->
+            @setTitle @__title unless Ext.isEmpty @__title
+            
           tools: [
             type: 'close'
             callback: (tool)->

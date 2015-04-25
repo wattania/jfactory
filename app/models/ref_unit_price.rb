@@ -14,4 +14,12 @@ class RefUnitPrice < ActiveRecord::Base
       error[:unit_name] << "Unit Price Duplicate!"
     end
   end
+
+  def self.dropdown
+    ret = []
+    where(deleted_at: nil).order(:unit_name).each{|row|
+      ret.push({unit_name: row.unit_name, uuid: row.uuid})
+    }
+    ret
+  end
 end
