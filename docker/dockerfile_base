@@ -1,0 +1,19 @@
+FROM centos:centos6.6
+MAINTAINER Wattana Inthaphong <wattaint@gmail.com>
+# enable centos plus repo and install epel repo
+RUN rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm \
+ && rpm -iUvh http://yum.postgresql.org/9.4/redhat/rhel-6-x86_64/pgdg-centos94-9.4-1.noarch.rpm \
+ && yum update -y \
+ && yum install -y make patch libyaml-devel libffi-devel glibc-headers autoconf gcc-c++ glibc-devel patch readline-devel zlib-devel openssl-devel bzip2 automake libtool bison \
+ && yum install -y postgresql94 postgresql94-devel postgresql94-libs postgresql94-server \
+ && yum install -y wget monit mlocate vim which tar \
+ && yum install -y curl-devel pcre-devel \
+ && yum clean all
+
+COPY packages/jre-8u45-linux-x64.rpm /tmp
+WORKDIR /tmp
+RUN rpm -Uvhi/jre-8u45-linux-x64.rpm 
+
+COPY packages/jruby-bin-1.7.19.zip /tmp
+
+WORKDIR /
