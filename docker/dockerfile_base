@@ -16,4 +16,5 @@ RUN rpm -Uvh /tmp/jre-8u45-linux-x64.rpm && rm -rf /tmp/jre-8u45-linux-x64.rpm
 ADD packages/jruby-bin-1.7.19.tar.gz /opt
 #ENV JRUBY_HOME /opt/jruby-1.7.19
 ENV PATH /opt/jruby-1.7.19/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+RUN gem install bundler
 WORKDIR /

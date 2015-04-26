@@ -9,8 +9,8 @@ COPY config/monit/monit.conf /etc/monit.conf
 RUN chmod 700 /etc/monit.conf
 
 WORKDIR /tmp
-ADD rails_app/Gemfile /tmp/Gemfile
-ADD rails_app/Gemfile.lock /tmp/Gemfile.lock
+ADD rails/Gemfile /tmp/Gemfile
+ADD rails/Gemfile.lock /tmp/Gemfile.lock
 RUN bundle install
 
 WORKDIR /
