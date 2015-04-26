@@ -12,6 +12,8 @@ RUN rpm -iUvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noa
 
 COPY packages/jre-8u45-linux-x64.rpm /tmp/jre-8u45-linux-x64.rpm
 RUN rpm -Uvh /tmp/jre-8u45-linux-x64.rpm && rm -rf /tmp/jre-8u45-linux-x64.rpm 
+COPY UnlimitedJCEPolicy/local_policy.jar /usr/java/latest/lib/security/local_policy.jar
+COPY UnlimitedJCEPolicy/US_export_policy.jar /usr/java/latest/lib/security/US_export_policy.jar
 
 ADD packages/jruby-bin-1.7.19.tar.gz /opt
 #ENV JRUBY_HOME /opt/jruby-1.7.19
