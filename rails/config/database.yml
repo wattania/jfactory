@@ -29,7 +29,7 @@ test:
 
 production:
   adapter: jdbcpostgresql
-  database: db/jfactory
+  database: jfactory_production
   username: jfactory
   password: jfactory
   encoding: utf8

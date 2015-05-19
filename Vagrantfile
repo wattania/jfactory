@@ -89,9 +89,17 @@ end
 Vagrant.require_version ">= 1.6.3"
 
 Vagrant.configure("2") do |config|
+  # Parallel
+  config.vm.box = "parallels/boot2docker"
+
+  config.ssh.username = 'docker'
+  #config.ssh.password = 'tcuser'
+  config.ssh.insert_key = false
+  ########################################
+
   config.vm.define "boot2docker"
 
-  config.vm.box = "blinkreaction/boot2docker"
+  #config.vm.box = "blinkreaction/boot2docker"
   config.vm.box_version = "1.6.0"
   config.vm.box_check_update = false
 
@@ -167,6 +175,14 @@ Vagrant.configure("2") do |config|
   end
 
   ######################################################################
+
+  config.vm.provider "parallels" do |v|
+    v.name = vagrant_folder_name + "_boot2docker_parellel"
+    v.update_guest_tools = true
+    v.memory = 4096
+    v.cpus = 1
+    v.optimize_power_consumption = false
+  end
 
   ## VirtualBox VM settings.
   

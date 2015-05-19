@@ -11,9 +11,11 @@ def rec_path(path, file= false)
   end.select { |x| x }.flatten(1)
 end
 puts "Load JARs"
+total = 0
 rec_path(Pathname.new(Rails.root.join "jars"), true).each{|entry|
   if entry.to_s.end_with? ".jar"
-    puts "-> #{entry}"
+    total += 1
     require entry.to_s
   end
 }
+puts "Load JARs completed: total = #{total}"
