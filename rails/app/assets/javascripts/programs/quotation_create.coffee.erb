@@ -106,15 +106,17 @@ Ext.define 'QuotationCreate',
         xtype: 'toolbar'
         dock: 'top'
         items: [
-          xtype: 'button'
+          xtype: 'upload5'
           text: text_fa_icon 'upload', ''
-          
-        ,
-          xtype: 'button'
-          text: text_fa_icon 'plus', 'Add'
-          handler: ->
-            me.grid.getStore().add {}
- 
+          callback: (err, hash)->
+            return if err
+            me.grid.setLoading true
+            me.rest_client.update hash, "process_file", {},
+              ()->
+                me.grid.setLoading false
+            ,
+              ()->
+                me.grid.setLoading false
         ]
       ]
       columns: [
@@ -167,6 +169,9 @@ Ext.define 'QuotationCreate',
         width: 120
         editor:
           xtype: 'textfield'
+      ,
+        text: 'Part Price'
+        width: 120
       ,
         text: 'Package Price'
         width: 120

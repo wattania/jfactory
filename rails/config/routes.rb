@@ -2,9 +2,10 @@ Jfactory::Application.routes.draw do
   devise_for :users, :path => "", :controllers => {:sessions => 'session'}
   root to: "home#index"
   post '/initialize' => 'home#app_init'
+  post '/upload' => 'upload#file_upload'
 
   namespace :settings do
-    resources :user, :customer, :freight_term, :model, :unit_price
+    resources :user, :customer, :freight_term, :model, :unit_price, :part
   end
 
   namespace :programs do 

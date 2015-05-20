@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150424143130) do
+ActiveRecord::Schema.define(version: 20150520055311) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,21 @@ ActiveRecord::Schema.define(version: 20150424143130) do
 
   add_index "ref_models", ["model_name"], name: "index_ref_models_on_model_name", using: :btree
   add_index "ref_models", ["uuid"], name: "index_ref_models_on_uuid", unique: true, using: :btree
+
+  create_table "ref_part_names", force: true do |t|
+    t.string   "part_name",                           null: false
+    t.text     "remark"
+    t.string   "uuid",         limit: 36,             null: false
+    t.integer  "lock_version",            default: 0, null: false
+    t.datetime "deleted_at"
+    t.string   "created_by",                          null: false
+    t.string   "updated_by",                          null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ref_part_names", ["part_name"], name: "index_ref_part_names_on_part_name", using: :btree
+  add_index "ref_part_names", ["uuid"], name: "index_ref_part_names_on_uuid", unique: true, using: :btree
 
   create_table "ref_unit_prices", force: true do |t|
     t.string   "unit_name",                           null: false
@@ -159,6 +174,7 @@ ActiveRecord::Schema.define(version: 20150424143130) do
     t.string   "sub_code"
     t.string   "customer_code"
     t.string   "part_name"
+    t.string   "ref_part_uuid",                                           null: false
     t.decimal  "part_price",                     precision: 20, scale: 2
     t.decimal  "package_price",                  precision: 20, scale: 2
     t.string   "ref_unit_price_ref",                                      null: false

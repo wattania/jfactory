@@ -6,4 +6,8 @@ class Programs::QuotationController < ResourceHelperController
     result[:data][:unit_prices]   = RefUnitPrice.dropdown
     result[:data][:models]        = RefModel.dropdown
   end
+
+  def update_process_file result
+    
+  end
 end

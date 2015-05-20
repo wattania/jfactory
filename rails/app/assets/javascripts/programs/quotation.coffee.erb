@@ -11,8 +11,8 @@ Ext.define 'QuotationView',
 
       btn_create.on 'click', ()->
         main_page = me.up 'panel[name=main_page]'
-        close_tool = main_page.down 'tool'
-        close_tool.setVisible false
+        #close_tool = main_page.down 'tool'
+        #close_tool.setVisible false
 
         me.setLoading true
         me.show_form_page btn_create.text, "create", (error)->
@@ -20,9 +20,10 @@ Ext.define 'QuotationView',
 
   get_form: (name, init)->
     console.log "get_form", init
+    me = @
     Ext.create "QuotationCreate",
       init: init
-
+      rest_client: me.rest_client
 
   add_filter: (name, type, caption)->
     me = @

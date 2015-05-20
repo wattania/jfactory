@@ -7,6 +7,7 @@ class CreateTbQuotationItems < ActiveRecord::Migration
       t.string  :sub_code
       t.string  :customer_code
       t.string  :part_name
+      t.string  :ref_part_uuid, null: false
       t.decimal :part_price, precision: 20, scale: 2
       t.decimal :package_price, precision: 20, scale: 2
       t.string  :ref_unit_price_ref, null: false

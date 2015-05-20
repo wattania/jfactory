@@ -205,6 +205,12 @@ Ext.define 'MainPage',
               btn.setDisabled true
               me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
           ,
+            text: 'Part'
+            program: 'part'
+            handler: (btn)->
+              btn.setDisabled true
+              me.load_setting_page btn.program, btn.text, ()-> btn.setDisabled false
+          ,
             text: 'Unit Price'
             program: 'unit_price'
             handler: (btn)->
