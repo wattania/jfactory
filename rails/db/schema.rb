@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150520055311) do
+ActiveRecord::Schema.define(version: 20150520073316) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "file_uploads", force: true do |t|
+    t.string   "file_name",   null: false
+    t.string   "file_hash",   null: false
+    t.decimal  "file_size"
+    t.string   "uploaded_by"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "file_uploads", ["file_hash"], name: "index_file_uploads_on_file_hash", using: :btree
+  add_index "file_uploads", ["file_name"], name: "index_file_uploads_on_file_name", using: :btree
 
   create_table "ref_customers", force: true do |t|
     t.string   "cust_name",                           null: false
@@ -180,6 +192,7 @@ ActiveRecord::Schema.define(version: 20150520055311) do
     t.string   "ref_unit_price_ref",                                      null: false
     t.string   "po_reference",       limit: 400
     t.string   "remark",             limit: 400
+    t.string   "file_hash",                                               null: false
     t.string   "created_by",                                              null: false
     t.string   "updated_by",                                              null: false
     t.datetime "created_at"
@@ -187,6 +200,7 @@ ActiveRecord::Schema.define(version: 20150520055311) do
   end
 
   add_index "tb_quotation_items", ["created_by"], name: "index_tb_quotation_items_on_created_by", using: :btree
+  add_index "tb_quotation_items", ["file_hash"], name: "index_tb_quotation_items_on_file_hash", using: :btree
   add_index "tb_quotation_items", ["quotation_uuid"], name: "index_tb_quotation_items_on_quotation_uuid", unique: true, using: :btree
   add_index "tb_quotation_items", ["ref_model_uuid"], name: "index_tb_quotation_items_on_ref_model_uuid", using: :btree
   add_index "tb_quotation_items", ["ref_unit_price_ref"], name: "index_tb_quotation_items_on_ref_unit_price_ref", using: :btree

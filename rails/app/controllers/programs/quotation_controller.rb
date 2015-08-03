@@ -8,6 +8,8 @@ class Programs::QuotationController < ResourceHelperController
   end
 
   def update_process_file result
-    
+    file_path = FileUpload.get_path_by_hash params[:id]
+    TbQuotationItem.validate_xml file_path.to_s
+
   end
 end

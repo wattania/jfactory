@@ -86,7 +86,7 @@ Ext.define 'Ext.xsk.Upload5',
                               win.setHeight 200
                               win.add 
                                 xtype: 'textfield'
-                                value: response.error
+                                value: "<font color=red>" + response.data.message + "</font>"
                                 
                               if Ext.isFunction config.callback 
                                 config.callback error
@@ -94,8 +94,8 @@ Ext.define 'Ext.xsk.Upload5',
                             else
                               win.close()
                               if Ext.isFunction config.callback
-                                config.callback null, response.hash
- 
+                                config.callback null, response.data
+                                
                           catch err
                             console.log " -upload error-"
                             console.log err
